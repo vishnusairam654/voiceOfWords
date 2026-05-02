@@ -47,54 +47,54 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* Neural Void Custom Theme Additions */
-  --color-surface: #121214;
-  --color-text-main: #FAFAFA;
-  --color-text-muted: #A1A1AA;
-  --color-ai-violet: #8B5CF6;
-  --color-ai-blue: #3B82F6;
-  --color-ai-cyan: #06B6D4;
-  --background-image-ai-gradient: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 50%, #06B6D4 100%);
-  --background-image-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
-  --blur-glass: 12px;
-  --shadow-card: 0 4px 30px rgba(0, 0, 0, 0.5);
-  --shadow-ai-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+  /* Voice Of Words Custom Theme Additions */
+  --color-surface: #FFFFFF;
+  --color-text-main: #1C3B3F;
+  --color-text-muted: #5A7678;
+  --color-ai-violet: #35858E;
+  --color-ai-blue: #7DA78C;
+  --color-ai-cyan: #C2D099;
+  --background-image-ai-gradient: linear-gradient(135deg, #35858E 0%, #7DA78C 50%, #C2D099 100%);
+  --background-image-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.3) 100%);
+  --blur-glass: 16px;
+  --shadow-card: 0 10px 30px -5px rgba(53, 133, 142, 0.15);
+  --shadow-ai-glow: 0 4px 20px rgba(53, 133, 142, 0.4);
 }
 
-/* Neural Void Theme — Dark Mode (Default) */
-.dark, :root {
-  --background: #09090B;
-  --foreground: #FAFAFA;
-  --primary: #8B5CF6;
-  --primary-foreground: #FAFAFA;
-  --secondary: #121214;
-  --secondary-foreground: #FAFAFA;
-  --muted: #27272A;
-  --muted-foreground: #A1A1AA;
-  --accent: #3B82F6;
-  --accent-foreground: #FAFAFA;
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.08);
-  --ring: rgba(139, 92, 246, 0.5);
-  --destructive: #EF4444;
-  --card: #121214;
-  --card-foreground: #FAFAFA;
-  --popover: #121214;
-  --popover-foreground: #FAFAFA;
+/* Voice of Words Theme — Default */
+:root {
+  --background: #E6EEC9;
+  --foreground: #1C3B3F;
+  --primary: #35858E;
+  --primary-foreground: #FFFFFF;
+  --secondary: #7DA78C;
+  --secondary-foreground: #FFFFFF;
+  --muted: #C2D099;
+  --muted-foreground: #5A7678;
+  --accent: #C2D099;
+  --accent-foreground: #1C3B3F;
+  --border: rgba(53, 133, 142, 0.2);
+  --input: rgba(53, 133, 142, 0.2);
+  --ring: rgba(53, 133, 142, 0.5);
+  --destructive: #E05C5C;
+  --card: #FFFFFF;
+  --card-foreground: #1C3B3F;
+  --popover: #FFFFFF;
+  --popover-foreground: #1C3B3F;
   --radius: 12px;
-  --chart-1: #8B5CF6;
-  --chart-2: #3B82F6;
-  --chart-3: #06B6D4;
-  --chart-4: #6366F1;
-  --chart-5: #EC4899;
-  --sidebar: #121214;
-  --sidebar-foreground: #FAFAFA;
-  --sidebar-primary: #8B5CF6;
-  --sidebar-primary-foreground: #FAFAFA;
-  --sidebar-accent: #27272A;
-  --sidebar-accent-foreground: #FAFAFA;
-  --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-ring: rgba(139, 92, 246, 0.5);
+  --chart-1: #35858E;
+  --chart-2: #7DA78C;
+  --chart-3: #C2D099;
+  --chart-4: #E6EEC9;
+  --chart-5: #35858E;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #1C3B3F;
+  --sidebar-primary: #35858E;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #E6EEC9;
+  --sidebar-accent-foreground: #1C3B3F;
+  --sidebar-border: rgba(53, 133, 142, 0.2);
+  --sidebar-ring: rgba(53, 133, 142, 0.5);
 }
 
 @layer base {

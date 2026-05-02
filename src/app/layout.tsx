@@ -17,7 +17,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Bookified — AI Voice Book Companion",
+  title: "Voice Of Words — AI Voice Book Companion",
   description:
     "Upload your books and have natural voice conversations about them with AI. Powered by ElevenLabs voices and intelligent RAG search.",
 };
@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={cn("dark", inter.variable, playfair.variable)}>
+      <html lang="en" className={cn(inter.variable, playfair.variable)}>
         <body className="min-h-screen bg-background font-sans text-foreground antialiased">
           <Navbar />
           <main className="pt-16">{children}</main>

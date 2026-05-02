@@ -11,7 +11,7 @@ export default function Navbar() {
           href="/"
           className="font-heading text-2xl font-bold tracking-tight text-primary transition-colors hover:text-accent"
         >
-          Bookified
+          Voice Of Words
         </Link>
 
         <div className="flex items-center gap-3">

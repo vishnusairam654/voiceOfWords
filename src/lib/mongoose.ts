@@ -33,7 +33,7 @@ export async function connectDB(): Promise<typeof mongoose> {
   if (!cached.promise) {
     cached.promise = mongoose
       .connect(MONGODB_URI, {
-        dbName: "bookified",
+        dbName: "voiceofwords",
         bufferCommands: false,
         serverSelectionTimeoutMS: 10000,
         socketTimeoutMS: 45000,
