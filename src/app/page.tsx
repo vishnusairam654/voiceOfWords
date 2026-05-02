@@ -41,8 +41,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
             {[
               {
-                title: "Upload PDFs",
-                desc: "Import any book as a PDF and we'll extract the text automatically.",
+                title: "Upload Documents",
+                desc: "Import PDFs, DOCX, TXT, or XML files — we'll extract the text automatically.",
               },
               {
                 title: "Choose a Voice",
@@ -50,7 +50,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               },
               {
                 title: "Converse Naturally",
-                desc: "Ask questions, get summaries, and explore ideas through voice.",
+                desc: "Ask questions, get summaries, and explore ideas through voice or chat.",
               },
             ].map((feature) => (
               <div
@@ -93,12 +93,12 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="font-heading text-3xl font-bold tracking-tight text-foreground">
-          My Library
+          My Documents
         </h1>
         <Link href="/books/new">
           <Button>
             <Plus className="size-4" data-icon="inline-start" />
-            Upload Book
+             Upload Document
           </Button>
         </Link>
       </div>
@@ -134,7 +134,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             <Link href="/books/new" className="mt-4">
               <Button variant="outline">
                 <Plus className="size-4" data-icon="inline-start" />
-                Upload Your First Book
+                 Upload Your First Document
               </Button>
             </Link>
           )}
@@ -155,7 +155,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                   sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
                 />
-              </div>
+                {book.fileType && book.fileType !== "pdf" && (
+                  <span className="absolute top-2 right-2 rounded bg-black/60 px-1.5 py-0.5 text-[9px] font-bold uppercase text-white backdrop-blur-sm">
+                    {book.fileType}
+                  </span>
+                )}</div>
               <div className="mt-2 px-0.5">
                 <h3 className="line-clamp-1 text-sm font-semibold text-foreground">
                   {book.title}

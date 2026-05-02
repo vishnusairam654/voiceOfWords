@@ -16,6 +16,7 @@ interface CreateBookInput {
   coverBlobKey: string;
   persona: string;
   fullText: string;
+  fileType?: string;
 }
 
 export async function createBook(data: CreateBookInput) {
@@ -45,6 +46,7 @@ export async function createBook(data: CreateBookInput) {
     coverURL: data.coverURL,
     coverBlobKey: data.coverBlobKey,
     persona: data.persona,
+    fileType: data.fileType || "pdf",
     totalSegments: segments.length,
   });
 

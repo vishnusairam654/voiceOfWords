@@ -23,6 +23,10 @@ export async function POST(request: Request) {
         return {
           allowedContentTypes: [
             "application/pdf",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "text/plain",
+            "text/xml",
+            "application/xml",
             "image/jpeg",
             "image/png",
             "image/webp",

@@ -10,7 +10,11 @@ export interface IBook extends Document {
   coverURL: string;
   coverBlobKey: string;
   persona: string;
+  fileType: string;
   totalSegments: number;
+  shortSummary: string;
+  detailedSummary: string;
+  keyPoints: string[];
   createdAt: Date;
 }
 
@@ -25,7 +29,11 @@ const BookSchema = new Schema<IBook>(
     coverURL: { type: String, required: true },
     coverBlobKey: { type: String, required: true },
     persona: { type: String, required: true },
+    fileType: { type: String, default: "pdf" },
     totalSegments: { type: Number, default: 0 },
+    shortSummary: { type: String, default: "" },
+    detailedSummary: { type: String, default: "" },
+    keyPoints: [{ type: String }],
   },
   { timestamps: true }
 );
