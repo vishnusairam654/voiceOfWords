@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { connectDB } from "@/lib/mongoose";
 import Book from "@/database/models/Book";
+import UploadForm from "@/components/UploadForm";
 
 interface HomePageProps {
   searchParams: Promise<{ q?: string }>;
@@ -116,27 +117,25 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         </div>
       </form>
 
-      {/* Book Grid */}
+      {/* Book Grid or Upload Form */}
       {books.length === 0 ? (
-        <div className="mt-20 flex flex-col items-center justify-center text-center">
-          <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-2xl bg-muted">
-            <BookOpen className="size-8 text-muted-foreground" />
-          </div>
-          <h2 className="font-heading text-xl font-semibold text-foreground">
-            {q ? "No books found" : "No books yet"}
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {q
-              ? "Try a different search term."
-              : "Upload your first book to get started!"}
-          </p>
-          {!q && (
-            <Link href="/books/new" className="mt-4">
-              <Button variant="outline">
-                <Plus className="size-4" data-icon="inline-start" />
-                 Upload Your First Document
-              </Button>
-            </Link>
+        <div className="mt-12 flex flex-col items-center justify-center">
+          {q ? (
+            <div className="text-center">
+              <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-2xl bg-muted/50">
+                <Search className="size-8 text-muted-foreground" />
+              </div>
+              <h2 className="font-heading text-xl font-semibold text-foreground">
+                No documents found
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Try a different search term.
+              </p>
+            </div>
+          ) : (
+            <div className="w-full max-w-2xl py-12">
+              <UploadForm />
+            </div>
           )}
         </div>
       ) : (

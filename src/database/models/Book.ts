@@ -12,9 +12,9 @@ export interface IBook extends Document {
   persona: string;
   fileType: string;
   totalSegments: number;
-  shortSummary: string;
-  detailedSummary: string;
-  keyPoints: string[];
+  keyIdeas: Array<{ title: string; description: string }>;
+  concepts: string[];
+  highlights: string[];
   createdAt: Date;
 }
 
@@ -31,9 +31,14 @@ const BookSchema = new Schema<IBook>(
     persona: { type: String, required: true },
     fileType: { type: String, default: "pdf" },
     totalSegments: { type: Number, default: 0 },
-    shortSummary: { type: String, default: "" },
-    detailedSummary: { type: String, default: "" },
-    keyPoints: [{ type: String }],
+    keyIdeas: [
+      {
+        title: { type: String },
+        description: { type: String },
+      },
+    ],
+    concepts: [{ type: String }],
+    highlights: [{ type: String }],
   },
   { timestamps: true }
 );

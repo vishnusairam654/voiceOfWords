@@ -89,9 +89,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { bookId, mode } = (await request.json()) as {
+    const { bookId } = (await request.json()) as {
       bookId: string;
-      mode?: "short" | "detailed" | "keypoints" | "all";
     };
 
     if (!bookId || !mongoose.Types.ObjectId.isValid(bookId)) {
@@ -124,76 +123,50 @@ export async function POST(request: Request) {
       );
     }
 
-    const summaryMode = mode || "all";
     const title = book.title;
     const author = book.author;
 
-    const baseSystem = `You are an expert document analyst. You are analyzing "${title}" by ${author}. Be concise and insightful.`;
+    const baseSystem = `You are an expert document analyst. You are analyzing "${title}" by ${author}. Extract structured insights.`;
 
-    // For "all" mode, generate everything in ONE call to save tokens
-    if (summaryMode === "all") {
-      const combined = await callGroq(
-        baseSystem,
-        `Analyze the following document and provide your response in this EXACT JSON format (no other text):
+    const combined = await callGroq(
+      baseSystem,
+      `Analyze the following document and provide your response in this EXACT JSON format (no other text):
 {
-  "shortSummary": "A concise 2-3 sentence summary",
-  "detailedSummary": "A comprehensive 2 paragraph summary covering major topics and conclusions",
-  "keyPoints": ["Key point 1", "Key point 2", "Key point 3", "Key point 4", "Key point 5"]
+  "keyIdeas": [
+    { "title": "Main Idea 1", "description": "Brief explanation of the idea" },
+    { "title": "Main Idea 2", "description": "Brief explanation of the idea" },
+    { "title": "Main Idea 3", "description": "Brief explanation of the idea" }
+  ],
+  "concepts": ["Concept 1", "Concept 2", "Concept 3", "Concept 4", "Concept 5"],
+  "highlights": [
+    "A direct, profound quote or key takeaway from the text",
+    "Another important quote or crucial highlight"
+  ]
 }
 
 DOCUMENT:
 ${bookText}`
-      );
+    );
 
-      try {
-        const jsonMatch = combined.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          const parsed = JSON.parse(jsonMatch[0]);
-          book.shortSummary = parsed.shortSummary || "";
-          book.detailedSummary = parsed.detailedSummary || "";
-          book.keyPoints = parsed.keyPoints || [];
-        }
-      } catch {
-        // If JSON parsing fails, use the raw text as short summary
-        book.shortSummary = combined.trim();
+    try {
+      const jsonMatch = combined.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        const parsed = JSON.parse(jsonMatch[0]);
+        book.keyIdeas = parsed.keyIdeas || [];
+        book.concepts = parsed.concepts || [];
+        book.highlights = parsed.highlights || [];
       }
-    } else if (summaryMode === "short") {
-      book.shortSummary = (
-        await callGroq(
-          baseSystem,
-          `Provide a concise summary (2-3 sentences) of this document:\n\n${bookText}`
-        )
-      ).trim();
-    } else if (summaryMode === "detailed") {
-      book.detailedSummary = (
-        await callGroq(
-          baseSystem,
-          `Provide a detailed summary (2 paragraphs) of this document:\n\n${bookText}`
-        )
-      ).trim();
-    } else if (summaryMode === "keypoints") {
-      const raw = await callGroq(
-        baseSystem,
-        `Extract 5-7 key points. Return ONLY a JSON array: ["point1","point2",...]\n\n${bookText}`
-      );
-      try {
-        const match = raw.match(/\[[\s\S]*\]/);
-        book.keyPoints = match ? JSON.parse(match[0]) : [raw.trim()];
-      } catch {
-        book.keyPoints = raw
-          .split("\n")
-          .filter((l: string) => l.trim().match(/^[-•*\d]/))
-          .map((l: string) => l.replace(/^[-•*\d.)\s]+/, "").trim())
-          .filter(Boolean);
-      }
+    } catch {
+      console.error("Failed to parse Groq JSON response", combined);
+      throw new Error("Failed to generate structured summary");
     }
 
     await book.save();
 
     return NextResponse.json({
-      shortSummary: book.shortSummary,
-      detailedSummary: book.detailedSummary,
-      keyPoints: book.keyPoints,
+      keyIdeas: book.keyIdeas,
+      concepts: book.concepts,
+      highlights: book.highlights,
     });
   } catch (err) {
     console.error("Summarize error:", err);

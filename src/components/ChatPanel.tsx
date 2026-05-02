@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Send, MessageCircle, Loader2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Send, MessageCircle, Sparkles, BookOpen, PenTool } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -19,6 +20,12 @@ interface ChatPanelProps {
   };
 }
 
+const QUICK_ACTIONS = [
+  { id: "explain", label: "Explain simply", icon: Sparkles, prompt: "Can you explain the main concept of this document in simple terms, as if to a beginner?" },
+  { id: "examples", label: "Give examples", icon: BookOpen, prompt: "Can you provide some concrete examples from the text that support its main arguments?" },
+  { id: "notes", label: "Convert to notes", icon: PenTool, prompt: "Can you convert the most important parts of this document into a bulleted list of study notes?" },
+];
+
 export default function ChatPanel({ book }: ChatPanelProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -31,7 +38,7 @@ export default function ChatPanel({ book }: ChatPanelProps) {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, isLoading]);
 
   // Auto-resize textarea
   const handleInputChange = useCallback(
@@ -43,17 +50,16 @@ export default function ChatPanel({ book }: ChatPanelProps) {
     []
   );
 
-  const sendMessage = useCallback(async () => {
-    const trimmed = input.trim();
-    if (!trimmed || isLoading) return;
+  const sendMessage = useCallback(async (customPrompt?: string) => {
+    const textToSend = customPrompt || input.trim();
+    if (!textToSend || isLoading) return;
 
-    const userMsg: ChatMessage = { role: "user", content: trimmed };
+    const userMsg: ChatMessage = { role: "user", content: textToSend };
     const updatedMessages = [...messages, userMsg];
     setMessages(updatedMessages);
     setInput("");
     setIsLoading(true);
 
-    // Reset textarea height
     if (inputRef.current) {
       inputRef.current.style.height = "auto";
     }
@@ -101,94 +107,127 @@ export default function ChatPanel({ book }: ChatPanelProps) {
   );
 
   return (
-    <div className="flex h-[600px] flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
+    <div className="flex h-[600px] flex-col overflow-hidden rounded-[20px] border border-border/50 bg-card/40 backdrop-blur-md shadow-2xl shadow-black/5">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-border px-5 py-4">
-        <div className="min-w-0 flex-1">
-          <h2 className="truncate font-heading text-lg font-semibold text-foreground">
-            {book.title}
-          </h2>
-          <p className="truncate text-sm text-muted-foreground">
-            by {book.author}
-          </p>
-        </div>
-        <div className="ml-4 flex items-center gap-2">
-          <MessageCircle className="size-4 text-primary" />
-          <span className="text-xs font-medium text-muted-foreground">
-            Chat
-          </span>
+      <div className="flex shrink-0 items-center justify-between border-b border-border/40 bg-card/80 px-6 py-4 backdrop-blur-md">
+        <div className="flex items-center gap-3">
+          <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary shadow-inner">
+            <MessageCircle className="size-4" />
+          </div>
+          <div>
+            <h2 className="font-heading text-sm font-semibold text-foreground">
+              AI Assistant
+            </h2>
+            <p className="text-[11px] text-muted-foreground">
+              Ask anything about {book.title}
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Messages */}
+      {/* Messages Area */}
       <div
         ref={scrollRef}
-        className="scrollbar-thin flex-1 overflow-y-auto px-4 py-4"
+        className="scrollbar-thin flex-1 overflow-y-auto overflow-x-hidden bg-gradient-to-b from-card/30 to-background/30 px-4 py-6 sm:px-6"
       >
-        {messages.length === 0 ? (
-          <div className="flex h-full flex-col items-center justify-center gap-3 text-muted-foreground">
-            <MessageCircle className="size-10 opacity-40" />
-            <p className="text-sm">Ask anything about this book</p>
-            <div className="mt-2 flex flex-wrap justify-center gap-2">
-              {[
-                "What are the main themes?",
-                "Summarize the key ideas",
-                "Who are the main characters?",
-              ].map((suggestion) => (
-                <button
-                  key={suggestion}
-                  type="button"
-                  onClick={() => {
-                    setInput(suggestion);
-                    inputRef.current?.focus();
-                  }}
-                  className="rounded-full border border-border bg-muted/50 px-3 py-1.5 text-xs text-foreground transition-colors hover:bg-primary/10 hover:border-primary/30"
-                >
-                  {suggestion}
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {messages.map((msg, i) => (
-              <div
-                key={i}
-                className={cn(
-                  "flex",
-                  msg.role === "user" ? "justify-end" : "justify-start"
-                )}
-              >
-                <div
+        <AnimatePresence initial={false}>
+          {messages.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex h-full flex-col items-center justify-center gap-6"
+            >
+              <div className="flex flex-col items-center text-center">
+                <div className="mb-4 flex size-16 items-center justify-center rounded-2xl bg-primary/5 shadow-inner">
+                  <Sparkles className="size-8 text-primary/60" />
+                </div>
+                <h3 className="font-heading text-lg font-medium text-foreground">
+                  How can I help you?
+                </h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  I've read the document and I'm ready to answer your questions.
+                </p>
+              </div>
+
+              {/* Quick Actions */}
+              <div className="grid w-full max-w-sm gap-2">
+                {QUICK_ACTIONS.map((action, i) => (
+                  <motion.button
+                    key={action.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 + 0.2 }}
+                    onClick={() => sendMessage(action.prompt)}
+                    className="group relative flex items-center gap-3 overflow-hidden rounded-xl border border-border/50 bg-card/50 px-4 py-3 text-left transition-all hover:bg-muted/50 hover:shadow-md"
+                  >
+                    <action.icon className="size-4 text-primary opacity-70 transition-transform group-hover:scale-110 group-hover:opacity-100" />
+                    <span className="text-sm font-medium text-foreground/80 group-hover:text-foreground">
+                      {action.label}
+                    </span>
+                    <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-primary/5 to-transparent transition-transform duration-500 group-hover:translate-x-[100%]" />
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          ) : (
+            <div className="space-y-6 pb-4">
+              {messages.map((msg, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
                   className={cn(
-                    "max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap",
-                    msg.role === "user"
-                      ? "rounded-br-md bg-primary text-primary-foreground"
-                      : "rounded-bl-md bg-muted text-foreground"
+                    "flex w-full",
+                    msg.role === "user" ? "justify-end" : "justify-start"
                   )}
                 >
-                  {msg.content}
-                </div>
-              </div>
-            ))}
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="rounded-2xl rounded-bl-md bg-muted px-4 py-2.5">
-                  <div className="flex items-center gap-1.5">
-                    <span className="size-2 animate-bounce rounded-full bg-muted-foreground/50 [animation-delay:0ms]" />
-                    <span className="size-2 animate-bounce rounded-full bg-muted-foreground/50 [animation-delay:150ms]" />
-                    <span className="size-2 animate-bounce rounded-full bg-muted-foreground/50 [animation-delay:300ms]" />
+                  <div
+                    className={cn(
+                      "relative max-w-[85%] rounded-[20px] px-5 py-3.5 text-[15px] leading-relaxed whitespace-pre-wrap shadow-sm",
+                      msg.role === "user"
+                        ? "rounded-br-sm bg-primary text-primary-foreground"
+                        : "rounded-bl-sm border border-border/50 bg-card/80 text-foreground backdrop-blur-sm"
+                    )}
+                  >
+                    {msg.content}
                   </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
+                </motion.div>
+              ))}
+              {isLoading && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex justify-start"
+                >
+                  <div className="flex rounded-[20px] rounded-bl-sm border border-border/50 bg-card/80 px-5 py-4 backdrop-blur-sm shadow-sm">
+                    <div className="flex items-center gap-1.5">
+                      <motion.div
+                        className="size-2 rounded-full bg-primary/60"
+                        animate={{ y: [0, -5, 0] }}
+                        transition={{ repeat: Infinity, duration: 0.6, delay: 0 }}
+                      />
+                      <motion.div
+                        className="size-2 rounded-full bg-primary/60"
+                        animate={{ y: [0, -5, 0] }}
+                        transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }}
+                      />
+                      <motion.div
+                        className="size-2 rounded-full bg-primary/60"
+                        animate={{ y: [0, -5, 0] }}
+                        transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }}
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Input */}
-      <div className="border-t border-border px-4 py-3">
-        <div className="flex items-end gap-2">
+      {/* Input Area */}
+      <div className="shrink-0 border-t border-border/40 bg-card/50 px-4 py-4 backdrop-blur-md sm:px-6">
+        <div className="relative flex items-end gap-2 rounded-2xl border border-border/50 bg-background/50 p-1.5 shadow-sm transition-colors focus-within:border-primary/50 focus-within:bg-background">
           <textarea
             ref={inputRef}
             value={input}
@@ -196,23 +235,19 @@ export default function ChatPanel({ book }: ChatPanelProps) {
             onKeyDown={handleKeyDown}
             placeholder="Type your message..."
             rows={1}
-            className="flex-1 resize-none rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="scrollbar-none max-h-32 min-h-[44px] w-full resize-none bg-transparent px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
           />
           <Button
-            onClick={sendMessage}
+            onClick={() => sendMessage()}
             disabled={!input.trim() || isLoading}
             size="icon"
-            className="size-10 shrink-0 rounded-xl"
+            className="mb-1 mr-1 size-10 shrink-0 rounded-xl bg-primary text-primary-foreground shadow-md transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
           >
-            {isLoading ? (
-              <Loader2 className="size-4 animate-spin" />
-            ) : (
-              <Send className="size-4" />
-            )}
+            <Send className="size-4" />
           </Button>
         </div>
-        <p className="mt-1.5 text-[10px] text-muted-foreground">
-          Press Enter to send, Shift+Enter for new line
+        <p className="mt-2 text-center text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+          AI can make mistakes. Verify important information.
         </p>
       </div>
     </div>

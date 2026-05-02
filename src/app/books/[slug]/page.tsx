@@ -54,9 +54,9 @@ export default async function BookPage({ params }: BookPageProps) {
   }));
 
   const initialSummary = {
-    shortSummary: book.shortSummary || "",
-    detailedSummary: book.detailedSummary || "",
-    keyPoints: book.keyPoints || [],
+    keyIdeas: book.keyIdeas || [],
+    concepts: book.concepts || [],
+    highlights: book.highlights || [],
   };
 
   return (
