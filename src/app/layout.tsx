@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={cn(inter.variable, playfair.variable)}>
+      <html lang="en" className={cn("light", inter.variable, playfair.variable)} data-theme="light">
         <body className="min-h-screen bg-background font-sans text-foreground antialiased">
           <Navbar />
           <main className="pt-16">{children}</main>
