@@ -60,6 +60,9 @@ export default async function BookPage({ params }: BookPageProps) {
     highlights: book.highlights || [],
   };
 
+  // Convert the full book object to a plain object for the client component
+  const plainBook = JSON.parse(JSON.stringify(book));
+
 
   return (
     <div className="flex h-[calc(100vh-64px)] overflow-hidden">
@@ -69,7 +72,7 @@ export default async function BookPage({ params }: BookPageProps) {
       </div>
 
       <BookClientLayout 
-        book={book} 
+        book={plainBook} 
         bookData={bookData} 
         initialSummary={initialSummary} 
       />
