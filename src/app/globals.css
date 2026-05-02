@@ -43,80 +43,58 @@
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-2xl: calc(var(--radius) * 2);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Neural Void Custom Theme Additions */
+  --color-surface: #121214;
+  --color-text-main: #FAFAFA;
+  --color-text-muted: #A1A1AA;
+  --color-ai-violet: #8B5CF6;
+  --color-ai-blue: #3B82F6;
+  --color-ai-cyan: #06B6D4;
+  --background-image-ai-gradient: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 50%, #06B6D4 100%);
+  --background-image-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  --blur-glass: 12px;
+  --shadow-card: 0 4px 30px rgba(0, 0, 0, 0.5);
+  --shadow-ai-glow: 0 0 20px rgba(139, 92, 246, 0.3);
 }
 
-/* Warm Literary Theme — Light Mode */
-:root {
-  --background: #F8F4E9;
-  --foreground: #212A3B;
-  --primary: #663820;
-  --primary-foreground: #FFFBF5;
-  --secondary: #EDE8D8;
-  --secondary-foreground: #3A2F24;
-  --muted: #EDE8D8;
-  --muted-foreground: #6B5E4E;
-  --accent: #8B5A3C;
-  --accent-foreground: #FFFBF5;
-  --border: #D4C9B0;
-  --input: #D4C9B0;
-  --ring: #8B5A3C;
-  --destructive: #B44141;
-  --card: #FFFFFF;
-  --card-foreground: #212A3B;
-  --popover: #FFFFFF;
-  --popover-foreground: #212A3B;
-  --radius: 0.625rem;
-  --chart-1: #663820;
-  --chart-2: #8B5A3C;
-  --chart-3: #A67B5B;
-  --chart-4: #C9A882;
-  --chart-5: #E8D5B7;
-  --sidebar: #F3EDE0;
-  --sidebar-foreground: #212A3B;
-  --sidebar-primary: #663820;
-  --sidebar-primary-foreground: #FFFBF5;
-  --sidebar-accent: #EDE8D8;
-  --sidebar-accent-foreground: #3A2F24;
-  --sidebar-border: #D4C9B0;
-  --sidebar-ring: #8B5A3C;
-}
-
-/* Warm Literary Theme — Dark Mode */
-.dark {
-  --background: #1A1612;
-  --foreground: #F0EBE0;
-  --primary: #B87D5A;
-  --primary-foreground: #1A1612;
-  --secondary: #2A2420;
-  --secondary-foreground: #F0EBE0;
-  --muted: #2A2420;
-  --muted-foreground: #A09080;
-  --accent: #C9956A;
-  --accent-foreground: #1A1612;
-  --border: #3A3028;
-  --input: #3A3028;
-  --ring: #C9956A;
-  --destructive: #D45555;
-  --card: #221E1A;
-  --card-foreground: #F0EBE0;
-  --popover: #221E1A;
-  --popover-foreground: #F0EBE0;
-  --chart-1: #B87D5A;
-  --chart-2: #C9956A;
-  --chart-3: #A67B5B;
-  --chart-4: #8B5A3C;
-  --chart-5: #663820;
-  --sidebar: #221E1A;
-  --sidebar-foreground: #F0EBE0;
-  --sidebar-primary: #B87D5A;
-  --sidebar-primary-foreground: #1A1612;
-  --sidebar-accent: #2A2420;
-  --sidebar-accent-foreground: #F0EBE0;
-  --sidebar-border: #3A3028;
-  --sidebar-ring: #C9956A;
+/* Neural Void Theme — Dark Mode (Default) */
+.dark, :root {
+  --background: #09090B;
+  --foreground: #FAFAFA;
+  --primary: #8B5CF6;
+  --primary-foreground: #FAFAFA;
+  --secondary: #121214;
+  --secondary-foreground: #FAFAFA;
+  --muted: #27272A;
+  --muted-foreground: #A1A1AA;
+  --accent: #3B82F6;
+  --accent-foreground: #FAFAFA;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: rgba(139, 92, 246, 0.5);
+  --destructive: #EF4444;
+  --card: #121214;
+  --card-foreground: #FAFAFA;
+  --popover: #121214;
+  --popover-foreground: #FAFAFA;
+  --radius: 12px;
+  --chart-1: #8B5CF6;
+  --chart-2: #3B82F6;
+  --chart-3: #06B6D4;
+  --chart-4: #6366F1;
+  --chart-5: #EC4899;
+  --sidebar: #121214;
+  --sidebar-foreground: #FAFAFA;
+  --sidebar-primary: #8B5CF6;
+  --sidebar-primary-foreground: #FAFAFA;
+  --sidebar-accent: #27272A;
+  --sidebar-accent-foreground: #FAFAFA;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: rgba(139, 92, 246, 0.5);
 }
 
 @layer base {

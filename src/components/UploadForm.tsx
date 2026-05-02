@@ -245,10 +245,10 @@ export default function UploadForm() {
               onDragLeave={onDragLeave}
               onDrop={onDrop}
               className={cn(
-                "relative flex h-72 w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[32px] border-2 border-dashed transition-all duration-300",
+                "relative flex h-72 w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[24px] border border-border bg-surface/50 transition-all duration-300 backdrop-blur-glass",
                 isDragging
-                  ? "border-primary bg-primary/5 scale-[1.02] shadow-[0_0_40px_rgba(var(--primary),0.15)]"
-                  : "border-border/60 bg-card/30 hover:border-primary/50 hover:bg-card/60 backdrop-blur-sm"
+                  ? "border-primary/50 scale-[1.02] shadow-[var(--shadow-ai-glow)]"
+                  : "hover:border-primary/30 hover:shadow-[var(--shadow-card)]"
               )}
             >
               <input
@@ -288,9 +288,9 @@ export default function UploadForm() {
             key="details"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="rounded-[32px] border border-border/50 bg-card/40 p-8 backdrop-blur-md shadow-2xl shadow-black/5"
+            className="rounded-[24px] border border-border bg-surface/50 p-8 backdrop-blur-glass shadow-[var(--shadow-card)]"
           >
-            <div className="mb-6 flex items-center gap-4 rounded-2xl bg-background/50 p-4 border border-border/40">
+            <div className="mb-6 flex items-center gap-4 rounded-[12px] bg-background/50 p-4 border border-border">
               <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <FileText className="size-6" />
               </div>
@@ -313,21 +313,21 @@ export default function UploadForm() {
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="title" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Document Title</Label>
+                <Label htmlFor="title" className="text-[11px] font-bold uppercase tracking-[0.05em] text-textMuted">Document Title</Label>
                 <Input
                   id="title"
                   {...register("title")}
-                  className="rounded-xl bg-background/50 border-border/50 focus:bg-background h-12 text-base shadow-sm"
+                  className="rounded-[12px] bg-background/30 border-border focus:bg-background h-12 text-base text-textMain"
                 />
                 {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="author" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Author / Source</Label>
+                <Label htmlFor="author" className="text-[11px] font-bold uppercase tracking-[0.05em] text-textMuted">Author / Source</Label>
                 <Input
                   id="author"
                   {...register("author")}
-                  className="rounded-xl bg-background/50 border-border/50 focus:bg-background h-12 text-base shadow-sm"
+                  className="rounded-[12px] bg-background/30 border-border focus:bg-background h-12 text-base text-textMain"
                 />
                 {errors.author && <p className="text-xs text-destructive">{errors.author.message}</p>}
               </div>
@@ -335,10 +335,12 @@ export default function UploadForm() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="group w-full rounded-xl h-14 text-base font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all hover:-translate-y-0.5"
+                className="group relative w-full overflow-hidden rounded-[12px] h-14 text-base font-semibold text-white shadow-[var(--shadow-ai-glow)] hover:scale-[1.02] transition-all"
               >
+                <div className="absolute inset-0 bg-[image:var(--background-image-ai-gradient)]" />
+                <div className="absolute inset-0 bg-black/20 opacity-0 transition-opacity group-hover:opacity-100" />
                 {loading ? (
-                  <div className="flex items-center gap-2">
+                  <div className="relative z-10 flex items-center justify-center gap-2">
                     <Loader2 className="size-5 animate-spin" />
                     <span>{progress}</span>
                   </div>
