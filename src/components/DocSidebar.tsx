@@ -48,10 +48,10 @@ export default function DocSidebar({ documents }: DocSidebarProps) {
       initial={{ width: 80 }}
       whileHover={{ width: 280 }}
       transition={{ type: "spring", bounce: 0, duration: 0.3 }}
-      className="group relative flex h-full flex-col overflow-hidden border-r border-border/50 bg-card/40 backdrop-blur-md shadow-[4px_0_24px_rgba(0,0,0,0.02)]"
+      className="group relative flex h-full flex-col overflow-hidden border-r border-border bg-surface/50 backdrop-blur-glass shadow-[var(--shadow-card)]"
     >
       {/* Header */}
-      <div className="flex h-16 shrink-0 items-center border-b border-border/40 px-6">
+      <div className="flex h-16 shrink-0 items-center border-b border-border bg-surface/80 px-6 backdrop-blur-glass">
         <div className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/20">
           <FileText className="size-4" />
         </div>
@@ -128,10 +128,10 @@ export default function DocSidebar({ documents }: DocSidebarProps) {
       </div>
 
       {/* Upload Button */}
-      <div className="shrink-0 border-t border-border/40 p-4">
+      <div className="shrink-0 border-t border-border bg-surface/50 p-4 backdrop-blur-glass">
         <button
           onClick={() => router.push("/books/new")}
-          className="group/btn relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:scale-[1.02] hover:shadow-primary/40 active:scale-95"
+          className="group/btn relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-[image:var(--background-image-ai-gradient)] px-4 py-3 text-sm font-semibold text-white shadow-[var(--shadow-ai-glow)] transition-all hover:scale-[1.02] active:scale-95"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] transition-transform duration-700 group-hover/btn:translate-x-[100%]" />
           <FilePlus className="size-4 shrink-0" />

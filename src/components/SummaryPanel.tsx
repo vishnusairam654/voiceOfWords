@@ -186,8 +186,8 @@ export default function SummaryPanel({
           animate={{ opacity: 1, scale: 1 }}
           className="flex flex-col items-center justify-center gap-4 py-12 text-center"
         >
-          <div className="flex size-16 items-center justify-center rounded-2xl bg-primary/10 shadow-inner">
-            <Lightbulb className="size-8 text-primary" />
+          <div className="flex size-16 items-center justify-center rounded-[12px] bg-[image:var(--background-image-ai-gradient)] shadow-[var(--shadow-ai-glow)]">
+            <Lightbulb className="size-8 text-white" />
           </div>
           <div className="space-y-1">
             <h3 className="font-heading text-lg font-medium text-foreground">
@@ -282,9 +282,9 @@ export default function SummaryPanel({
   };
 
   return (
-    <div className="overflow-hidden rounded-[20px] border border-border/50 bg-card/40 backdrop-blur-md shadow-2xl shadow-black/5">
+    <div className="overflow-hidden rounded-[24px] border border-border bg-surface/50 backdrop-blur-glass shadow-[var(--shadow-card)]">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-border/40 bg-card/80 px-4 py-3 backdrop-blur-md">
+      <div className="flex items-center justify-between border-b border-border bg-surface/80 px-4 py-3 backdrop-blur-glass">
         <div className="flex items-center gap-1 rounded-xl bg-muted/40 p-1 backdrop-blur-sm">
           {tabs.map((tab) => {
             const Icon = tab.icon;
