@@ -5,6 +5,7 @@ import Book from "@/database/models/Book";
 import DocSidebar from "@/components/DocSidebar";
 import SummaryPanel from "@/components/SummaryPanel";
 import BookInteraction from "@/components/BookInteraction";
+import BookClientLayout from "@/components/BookClientLayout";
 
 interface BookPageProps {
   params: Promise<{ slug: string }>;
@@ -59,40 +60,19 @@ export default async function BookPage({ params }: BookPageProps) {
     highlights: book.highlights || [],
   };
 
+
   return (
-    <div className="flex h-[calc(100vh-64px)]">
+    <div className="flex h-[calc(100vh-64px)] overflow-hidden">
       {/* Sidebar */}
-      <div className="hidden w-60 shrink-0 md:block">
+      <div className="hidden h-full w-20 shrink-0 md:block lg:w-20 lg:hover:w-60 transition-all duration-300">
         <DocSidebar documents={sidebarDocs} />
       </div>
 
-      {/* Main Content */}
-      <div className="flex flex-1 flex-col overflow-y-auto">
-        <div className="mx-auto w-full max-w-3xl space-y-4 px-4 py-6">
-          {/* Document Header */}
-          <div>
-            <h1 className="font-heading text-2xl font-bold text-foreground">
-              {book.title}
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              by {book.author}
-              <span className="ml-2 rounded-sm bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase">
-                {book.fileType || "pdf"}
-              </span>
-            </p>
-          </div>
-
-          {/* Summary Section */}
-          <SummaryPanel
-            bookId={book._id.toString()}
-            bookTitle={book.title}
-            initialSummary={initialSummary}
-          />
-
-          {/* Chat / Voice Section */}
-          <BookInteraction book={bookData} />
-        </div>
-      </div>
+      <BookClientLayout 
+        book={book} 
+        bookData={bookData} 
+        initialSummary={initialSummary} 
+      />
     </div>
   );
 }
