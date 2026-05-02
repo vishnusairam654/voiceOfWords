@@ -109,6 +109,7 @@ export default function UploadForm() {
       const pdfBlob = await upload(data.pdfFile.name, data.pdfFile, {
         access: "public",
         handleUploadUrl: "/api/upload",
+        addRandomSuffix: true,
       });
 
       setProgress("Uploading cover...");
@@ -117,6 +118,7 @@ export default function UploadForm() {
         coverBlob = await upload(data.coverFile.name, data.coverFile, {
           access: "public",
           handleUploadUrl: "/api/upload",
+          addRandomSuffix: true,
         });
       } else {
         const coverResponse = await fetch(coverDataURL);
@@ -124,6 +126,7 @@ export default function UploadForm() {
         coverBlob = await upload("cover.png", coverBlobData, {
           access: "public",
           handleUploadUrl: "/api/upload",
+          addRandomSuffix: true,
         });
       }
 
