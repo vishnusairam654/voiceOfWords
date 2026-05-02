@@ -180,10 +180,6 @@ export function useVapi(book: BookInfo) {
         return;
       }
 
-      // Only add voice override if it's a real ElevenLabs ID (not a placeholder)
-      const isRealVoiceId =
-        book.persona && !book.persona.includes("VOICE_ID_HERE");
-
       const overrides: Record<string, unknown> = {
         variableValues: {
           bookTitle: book.title,
@@ -191,15 +187,6 @@ export function useVapi(book: BookInfo) {
           bookId: book._id,
         },
       };
-
-      if (isRealVoiceId) {
-        overrides.voice = {
-          provider: "11labs",
-          voiceId: book.persona,
-          stability: 0.5,
-          similarityBoost: 0.75,
-        };
-      }
 
       console.log("Vapi start overrides:", JSON.stringify(overrides, null, 2));
       await vapi.start(assistantId, overrides);
