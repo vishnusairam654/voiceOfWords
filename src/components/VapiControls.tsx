@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import Transcript from "@/components/Transcript";
 import { useVapi, type BookInfo } from "@/hooks/useVapi";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { Send } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 interface VapiControlsProps {
   book: BookInfo;
@@ -24,7 +27,17 @@ export default function VapiControls({ book }: VapiControlsProps) {
     maxDuration,
     startCall,
     stopCall,
+    sendTextMessage,
   } = useVapi(book);
+
+  const [textInput, setTextInput] = useState("");
+
+  const handleSendText = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!textInput.trim() || status !== "active") return;
+    sendTextMessage(textInput.trim());
+    setTextInput("");
+  };
 
   const statusConfig = {
     idle: { color: "bg-gray-400", label: "Idle" },
@@ -99,6 +112,31 @@ export default function VapiControls({ book }: VapiControlsProps) {
           )}
         </div>
       </div>
+
+      {/* Voice Chat Input (Active Call Only) */}
+      {status === "active" && (
+        <form 
+          onSubmit={handleSendText}
+          className="border-t border-border/40 bg-card/50 p-4 backdrop-blur-md"
+        >
+          <div className="relative flex items-center gap-2">
+            <Input
+              value={textInput}
+              onChange={(e) => setTextInput(e.target.value)}
+              placeholder="Type a message during the call..."
+              className="pr-12 rounded-xl bg-background/50 border-border/50 focus:bg-background"
+            />
+            <Button
+              type="submit"
+              size="icon"
+              disabled={!textInput.trim()}
+              className="absolute right-1 size-8 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm transition-transform active:scale-95 disabled:opacity-50"
+            >
+              <Send className="size-3.5" />
+            </Button>
+          </div>
+        </form>
+      )}
     </div>
   );
 }

@@ -255,6 +255,25 @@ export function useVapi(book: BookInfo) {
     };
   }, [clearTimer]);
 
+  const sendTextMessage = useCallback((text: string) => {
+    if (status !== "active") return;
+    try {
+      const vapi = getVapi();
+      vapi.send({
+        type: "add-message",
+        message: {
+          role: "user",
+          content: text,
+        },
+      });
+      // Optimistically add to UI
+      setMessages((prev) => [...prev, { role: "user", content: text, final: true }]);
+    } catch (err) {
+      console.error("Failed to send text message:", err);
+      toast.error("Failed to send message");
+    }
+  }, [status]);
+
   return {
     status,
     messages,
@@ -266,5 +285,6 @@ export function useVapi(book: BookInfo) {
     isBillingError,
     startCall,
     stopCall,
+    sendTextMessage,
   };
 }
