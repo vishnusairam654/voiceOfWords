@@ -313,21 +313,21 @@ export default function UploadForm() {
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="title" className="text-[11px] font-bold uppercase tracking-[0.05em] text-textMuted">Document Title</Label>
+                <Label htmlFor="title" className="text-[11px] font-bold uppercase tracking-[0.05em] text-text-muted">Document Title</Label>
                 <Input
                   id="title"
                   {...register("title")}
-                  className="rounded-[12px] bg-background/30 border-border focus:bg-background h-12 text-base text-textMain"
+                  className="rounded-[12px] bg-background/30 border-border focus:bg-background h-12 text-base text-text-main"
                 />
                 {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="author" className="text-[11px] font-bold uppercase tracking-[0.05em] text-textMuted">Author / Source</Label>
+                <Label htmlFor="author" className="text-[11px] font-bold uppercase tracking-[0.05em] text-text-muted">Author / Source</Label>
                 <Input
                   id="author"
                   {...register("author")}
-                  className="rounded-[12px] bg-background/30 border-border focus:bg-background h-12 text-base text-textMain"
+                  className="rounded-[12px] bg-background/30 border-border focus:bg-background h-12 text-base text-text-main"
                 />
                 {errors.author && <p className="text-xs text-destructive">{errors.author.message}</p>}
               </div>

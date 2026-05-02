@@ -107,9 +107,9 @@ export default function ChatPanel({ book }: ChatPanelProps) {
   );
 
   return (
-    <div className="flex h-[600px] flex-col overflow-hidden rounded-[20px] border border-border/50 bg-card/40 backdrop-blur-md shadow-2xl shadow-black/5">
+    <div className="flex h-[600px] flex-col overflow-hidden rounded-[24px] border border-border bg-surface/50 backdrop-blur-glass shadow-[var(--shadow-card)]">
       {/* Header */}
-      <div className="flex shrink-0 items-center justify-between border-b border-border/40 bg-card/80 px-6 py-4 backdrop-blur-md">
+      <div className="flex shrink-0 items-center justify-between border-b border-border bg-surface/80 px-6 py-4 backdrop-blur-glass">
         <div className="flex items-center gap-3">
           <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary shadow-inner">
             <MessageCircle className="size-4" />
@@ -118,7 +118,7 @@ export default function ChatPanel({ book }: ChatPanelProps) {
             <h2 className="font-heading text-sm font-semibold text-foreground">
               AI Assistant
             </h2>
-            <p className="text-[11px] text-muted-foreground">
+            <p className="text-[11px] font-bold uppercase tracking-[0.05em] text-text-muted">
               Ask anything about {book.title}
             </p>
           </div>
@@ -138,13 +138,13 @@ export default function ChatPanel({ book }: ChatPanelProps) {
               className="flex h-full flex-col items-center justify-center gap-6"
             >
               <div className="flex flex-col items-center text-center">
-                <div className="mb-4 flex size-16 items-center justify-center rounded-2xl bg-primary/5 shadow-inner">
-                  <Sparkles className="size-8 text-primary/60" />
+                <div className="mb-4 flex size-16 items-center justify-center rounded-[12px] bg-[image:var(--background-image-ai-gradient)] shadow-[var(--shadow-ai-glow)]">
+                  <Sparkles className="size-8 text-white" />
                 </div>
-                <h3 className="font-heading text-lg font-medium text-foreground">
+                <h3 className="font-heading text-lg font-medium text-text-main">
                   How can I help you?
                 </h3>
-                <p className="mt-1 text-sm text-muted-foreground">
+                <p className="mt-1 text-sm text-text-muted">
                   I've read the document and I'm ready to answer your questions.
                 </p>
               </div>
@@ -158,7 +158,7 @@ export default function ChatPanel({ book }: ChatPanelProps) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1 + 0.2 }}
                     onClick={() => sendMessage(action.prompt)}
-                    className="group relative flex items-center gap-3 overflow-hidden rounded-xl border border-border/50 bg-card/50 px-4 py-3 text-left transition-all hover:bg-muted/50 hover:shadow-md"
+                    className="group relative flex items-center gap-3 overflow-hidden rounded-[12px] border border-border bg-surface/50 px-4 py-3 text-left transition-all hover:bg-surface hover:shadow-[var(--shadow-ai-glow)]"
                   >
                     <action.icon className="size-4 text-primary opacity-70 transition-transform group-hover:scale-110 group-hover:opacity-100" />
                     <span className="text-sm font-medium text-foreground/80 group-hover:text-foreground">
@@ -185,8 +185,8 @@ export default function ChatPanel({ book }: ChatPanelProps) {
                     className={cn(
                       "relative max-w-[85%] rounded-[20px] px-5 py-3.5 text-[15px] leading-relaxed whitespace-pre-wrap shadow-sm",
                       msg.role === "user"
-                        ? "rounded-br-sm bg-primary text-primary-foreground"
-                        : "rounded-bl-sm border border-border/50 bg-card/80 text-foreground backdrop-blur-sm"
+                        ? "rounded-br-sm bg-[image:var(--background-image-ai-gradient)] text-white shadow-[var(--shadow-ai-glow)]"
+                        : "rounded-bl-sm border border-border bg-surface/80 text-text-main backdrop-blur-glass"
                     )}
                   >
                     {msg.content}
@@ -226,8 +226,8 @@ export default function ChatPanel({ book }: ChatPanelProps) {
       </div>
 
       {/* Input Area */}
-      <div className="shrink-0 border-t border-border/40 bg-card/50 px-4 py-4 backdrop-blur-md sm:px-6">
-        <div className="relative flex items-end gap-2 rounded-2xl border border-border/50 bg-background/50 p-1.5 shadow-sm transition-colors focus-within:border-primary/50 focus-within:bg-background">
+      <div className="shrink-0 border-t border-border bg-surface/50 px-4 py-4 backdrop-blur-glass sm:px-6">
+        <div className="relative flex items-end gap-2 rounded-[12px] border border-border bg-background/50 p-1.5 shadow-[var(--shadow-card)] transition-colors focus-within:border-primary/50 focus-within:bg-background">
           <textarea
             ref={inputRef}
             value={input}
@@ -241,7 +241,7 @@ export default function ChatPanel({ book }: ChatPanelProps) {
             onClick={() => sendMessage()}
             disabled={!input.trim() || isLoading}
             size="icon"
-            className="mb-1 mr-1 size-10 shrink-0 rounded-xl bg-primary text-primary-foreground shadow-md transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+            className="mb-1 mr-1 size-10 shrink-0 rounded-[12px] bg-[image:var(--background-image-ai-gradient)] text-white shadow-[var(--shadow-ai-glow)] transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
           >
             <Send className="size-4" />
           </Button>
