@@ -52,7 +52,10 @@ Voice Of Words lets you upload PDF, DOCX, TXT, or XML files and instantly start 
 
 ## 📸 Screenshots
 
-> _Add screenshots or a demo GIF here_
+<img width="1897" height="903" alt="Screenshot 2026-05-05 184652" src="https://github.com/user-attachments/assets/358609e9-4f97-4789-ad38-583dc5c4b3bb" />
+<img width="1877" height="806" alt="Screenshot 2026-05-05 184614" src="https://github.com/user-attachments/assets/85b47ddd-a2cf-45de-9337-558f2c5070fa" />
+<img width="1895" height="894" alt="Screenshot 2026-05-05 184559" src="https://github.com/user-attachments/assets/899f23e8-6a9d-4e4b-8a8e-c91bd7c3506d" />
+
 
 ---
 
